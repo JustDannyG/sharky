@@ -3,6 +3,7 @@ const level1 = new Level(
         new Pufferfish(),
         new Pufferfish(),
         new Pufferfish(),
+        new Endboss(),
     ],
     [
         new BackgroundObject('/img/3. Background/Layers/5. Water/D2.png', -299, 0),

@@ -14,7 +14,6 @@ window.addEventListener("keydown", (event) => {
     if (event.key === "s" || event.key === "S") keyboard.down = true;
     if (event.key === "d" || event.key === "D") keyboard.right = true;
     if (event.key === " ") keyboard.space = true;
-    console.log(keyboard);
 });
 
 window.addEventListener("keyup", (event) => {
@@ -24,5 +23,4 @@ window.addEventListener("keyup", (event) => {
     if (event.key === "s" || event.key === "S") keyboard.down = false;
     if (event.key === "d" || event.key === "D") keyboard.right = false;
     if (event.key === " ") keyboard.space = false;
-    console.log(keyboard);
 });
