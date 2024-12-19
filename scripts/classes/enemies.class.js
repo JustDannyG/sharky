@@ -2,7 +2,7 @@ class Pufferfish extends MovableObject {
 
     currentImage = 0;
     height = 35;
-    widht = 50;
+    width = 50;
     swimmingImages = [
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
         'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',

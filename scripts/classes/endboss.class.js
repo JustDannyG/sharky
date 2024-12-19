@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
 
     currentImage = 0;
     height = 200;
-    widht = 280;
+    width = 280;
     swimmingImages = [
         'img/2.Enemy/3 Final Enemy/2.floating/1.png',
         'img/2.Enemy/3 Final Enemy/2.floating/2.png',

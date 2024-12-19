@@ -1,12 +1,14 @@
 class MovableObject {
   x = 0;
-  y = 40;
-  height = 10;
-  widht = 10;
+  y = 30;
+  height = 0;
+  width = 0;
   speed = 0.15;
   img;
   movingImagesCache = {};
   otherDirection = false;
+  health = 100;
+  animationCompleted;
 
   loadImage(path) {
     this.img = new Image();
@@ -30,25 +32,41 @@ class MovableObject {
       this.x -= this.speed;
     })
   }
-  playAnimation(swimmingImages) {
-    let i = this.currentImage % this.swimmingImages.length;
-    let path = swimmingImages[i];
-    this.img = this.movingImagesCache[path];
-    this.currentImage++;
 
-    if (character.x + character.width > chicken.x &&
-      character.y + character.height > chicken.y &&
-      character.x < chicken.x &&
-      character.y < chicken.y + chicken.height
-    ) { };
+  playAnimation(images) {
+    if (!this.animationCompleted) {
+      let i = this.currentImage % images.length; // Aktuelles Bild auswählen // ket i = 7 % 6 = 1, Rest 1
+      let path = images[i];
+      this.img = this.movingImagesCache[path];
+      this.currentImage++;
+      // Prüfen, ob die Animation abgeschlossen ist
+      if (this.currentImage >= images.length) {
+        this.animationCompleted = true; // Markiere Animation als abgeschlossen
+        this.img = this.movingImagesCache[images[images.length - 1]]; // Letztes Bild setzen
+      }
+    }
   }
 
-  isColliding(obj) {
-    return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
-      (this.Y + this.offsetY + this.height) >= obj.Y &&
-      (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
-      obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+  isColliding(mO) {
+    return this.x + this.width > mO.x &&
+      this.y + this.height > mO.y &&
+      this.x < mO.x &&
+      this.y < mO.y + mO.height;
+  }
+
+  hit() {
+    this.health -= 5;
+    if (this.health <= 0) {
+      this.health = 0;
+    }
+    console.log(this.health);
+  }
+
+  isHurt() {
 
   }
 
+  isDead() {
+    return this.health == 0;
+  }
 }

@@ -12,10 +12,21 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                }
+            })
+        }, 1000);
     }
 
     draw() {
@@ -28,7 +39,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             self.draw();
         })
     }
@@ -40,24 +51,30 @@ class World {
     }
 
     addObjectToMap(mO) {
-        if (mO.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mO.widht, 0)
-            this.ctx.scale(-1, 1);
-            mO.x = mO.x * -1;
-        }
-        this.ctx.drawImage(mO.img, mO.x, mO.y, mO.widht, mO.height);
-        
-        this.ctx.beginPath();
-        this.ctx.lineWidth = '2 ';
-        this.ctxstrokeStyle = 'grey';
-        this.ctx.rect(mO.x, mO.y, mO.x + mO.widht, mO.y + mO.height)
-        this.ctx.stroke();
+        if (mO.img && mO.img.complete) {
+            if (mO.otherDirection) {
+                this.ctx.save();
+                this.ctx.translate(mO.width, 0)
+                this.ctx.scale(-1, 1);
+                mO.x = mO.x * -1;
+            }
 
-        if (mO.otherDirection) {
-            mO.x = mO.x * -1;
-            this.ctx.restore();
+            this.ctx.drawImage(mO.img, mO.x, mO.y, mO.width, mO.height);
+            this.setGrid(mO.x, mO.y, mO.width, mO.height);
+
+            if (mO.otherDirection) {
+                mO.x = mO.x * -1;
+                this.ctx.restore();
+            }
         }
     }
-    
+
+    setGrid(mOX, mOY, mOWidth, mOWheight) {
+        this.ctx.beginPath();
+        this.ctx.lineWidth = '2';
+        this.ctx.strokeStyle = 'white';
+        this.ctx.rect(mOX, mOY, mOWidth, mOWheight)
+        this.ctx.stroke();
+    }
+
 }
